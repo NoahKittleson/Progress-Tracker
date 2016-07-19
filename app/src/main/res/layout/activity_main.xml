@@ -3,10 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.epicodus.progresstracker.ui.MainActivity">
+    tools:context="com.epicodus.progresstracker.ui.MainActivity"
+    android:background="@color/colorPrimary">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Task"
+        android:id="@+id/newTaskButton"
+        android:layout_alignParentBottom="true"
+        android:ems="10"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newTaskButton"
+        android:layout_below="@+id/taskListTextView"
+        android:columnWidth="90dp"
+        android:padding="2dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="30dp"
+        android:horizontalSpacing="30dp"
+        android:background="@drawable/gridborder"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Current Tasks"
+        android:id="@+id/taskListTextView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="35dp" />
+
 </RelativeLayout>
