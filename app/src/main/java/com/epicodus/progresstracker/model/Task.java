@@ -1,8 +1,12 @@
 package com.epicodus.progresstracker.model;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Guest on 7/19/16.
  */
+
+@Parcel
 public class Task {
     private String name;
     private String description;
@@ -10,6 +14,8 @@ public class Task {
     private int current;
     private boolean isDone;
     private String pushId;
+
+    public Task() {}
 
     public Task(String name, String description, int goal) {
         this.name = name;

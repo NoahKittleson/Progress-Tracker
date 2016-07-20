@@ -1,5 +1,6 @@
 package com.epicodus.progresstracker.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,8 +51,9 @@ public class NewTaskActivity extends AppCompatActivity implements View.OnClickLi
             String pushId = pushRef.getKey();
             newTask.setPushId(pushId);
             pushRef.setValue(newTask);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
-
-
 }
