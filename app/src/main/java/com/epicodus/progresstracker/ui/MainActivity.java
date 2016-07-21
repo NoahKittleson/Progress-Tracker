@@ -54,6 +54,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (String name : mTaskNameList) {
                     Log.d("TaskName:", name);
                 }
+                mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
+                        intent.putExtra("task", Parcels.wrap(mTaskNameList.get(position)));
+                        startActivity(intent);
+                    }
+                });
+
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, mTaskNameList);
+                mGridView.setAdapter(adapter);
+
             }
 
             @Override
@@ -61,17 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
-                intent.putExtra("task", Parcels.wrap(mTaskNameList.get(position)));
-                startActivity(intent);
-            }
-        });
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTaskNameList);
-        mGridView.setAdapter(adapter);
     }
 
     @Override
