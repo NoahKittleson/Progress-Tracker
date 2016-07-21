@@ -1,5 +1,6 @@
 package com.epicodus.progresstracker;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.support.v4.widget.TextViewCompat;
@@ -7,27 +8,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.epicodus.progresstracker.model.Task;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TaskDetailActivity extends AppCompatActivity {
+public class TaskDetailActivity extends AppCompatActivity implements View.OnClickListener{
     @Bind(R.id.chartView) DecoView mArcView;
-    @Bind(R.id.textView2) TextView mTextView;
+    @Bind(R.id.currentGoalsTextView) TextView mNameView;
+    @Bind(R.id.textView2) TextView mDescriptionView;
+    @Bind(R.id.progressBar) ProgressBar mProgressBar;
+    @Bind(R.id.button) Button mButton;
     SeriesItem seriesItem4;
+    Task mTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
         ButterKnife.bind(this);
+        //createCoolGraph();
+        mTask = Parcels.unwrap(getIntent().getExtras().getParcelable("task"));
+        mProgressBar.setProgress(mTask.getCurrent());
+        mProgressBar.setMax(mTask.getGoal());
+        mNameView.setText(mTask.getName());
+        mDescriptionView.setText(mTask.getDescription() + "\n" + mTask.getCurrent() + "/" + mTask.getGoal());
+        mButton.setOnClickListener(this);
+    }
 
+
+    private void createCoolGraph() {
         DecoView arcView = (DecoView) findViewById(R.id.chartView);
         //DecoView arcView2 = (DecoView) findViewById(R.id.chartView2);
 
@@ -120,9 +140,9 @@ public class TaskDetailActivity extends AppCompatActivity {
                 }
                 if (format.contains("%%")) {
                     float percentFilled = ((currentPosition - seriesItem4.getMinValue()) / (seriesItem4.getMaxValue() - seriesItem4.getMinValue()));
-                    mTextView.setText(String.format(format, percentFilled * 100f));
+                    mDescriptionView.setText(String.format(format, percentFilled * 100f));
                 } else {
-                    mTextView.setText(String.format(format, currentPosition));
+                    mDescriptionView.setText(String.format(format, currentPosition));
                 }
             }
 
@@ -132,5 +152,14 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == mButton) {
+            mTask.addCurrent(1);
+            mProgressBar.setProgress(mTask.getCurrent());
+            mDescriptionView.setText(mTask.getDescription() + "\n" + mTask.getCurrent() + "/" + mTask.getGoal());
+        }
     }
 }

@@ -53,6 +53,9 @@ public class NewTaskActivity extends AppCompatActivity implements View.OnClickLi
             pushRef.setValue(newTask);
 
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("goal", goal);
+            intent.putExtra("description", description);
             startActivity(intent);
         }
     }

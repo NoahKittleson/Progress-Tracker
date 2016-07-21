@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DatabaseReference mFirebaseRef;
     private ArrayList<String> mTaskNameList = new ArrayList<>();
+    private ArrayList<Task> mTaskList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot goalSnapshot : dataSnapshot.getChildren()) {
                     mTaskNameList.add(goalSnapshot.getValue(Task.class).getName());
+                    mTaskList.add(goalSnapshot.getValue(Task.class));
                 }
                 for (String name : mTaskNameList) {
                     Log.d("TaskName:", name);
@@ -57,9 +59,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
-                        intent.putExtra("task", Parcels.wrap(mTaskNameList.get(position)));
-                        startActivity(intent);
+                        Intent intent = getIntent();
+                        String name = intent.getStringExtra("name");
+                        String description = intent.getStringExtra("description");
+                        int goal = intent.getIntExtra("goal", 0);
+
+                        Intent intent2 = new Intent(MainActivity.this, TaskDetailActivity.class);
+                        intent2.putExtra("name", Parcels.wrap(mTaskNameList.get(position)));
+                        intent2.putExtra("task", Parcels.wrap(mTaskList.get(position)));
+                        startActivity(intent2);
                     }
                 });
 

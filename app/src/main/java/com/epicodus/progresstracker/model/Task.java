@@ -40,6 +40,14 @@ public class Task {
         return current;
     }
 
+    public void addCurrent(int num) {
+        this.current += num;
+        if (this.current >= goal) {
+            setDone();
+            this.current = goal;
+        }
+    }
+
     public String getPushId() {
         return pushId;
     }
